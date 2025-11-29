@@ -1,0 +1,21 @@
+ <div class="contenedor_formulario">
+ <p>Nombre</p>
+<mat-form-field>
+  <mat-label>Ingrese su nombre:</mat-label>
+  <input matInput>
+</mat-form-field>
+<p>Fecha de nacimiento</p>
+<input matInput [matDatepicker]="picker">
+<mat-hint>MM/DD/YYYY</mat-hint>
+<mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+<mat-datepicker #picker></mat-datepicker>
+<p>Estatura</p>
+<mat-form-field>
+  <mat-label>Ingrese su estatura:</mat-label>
+  <input matInput>
+</mat-form-field>
+ <div class="example-button-row">
+    <button matButton>Enviar</button>   
+  </div>
+
+ </div>
