@@ -1,3 +1,25 @@
 .contenedor_formulario{
     padding: 30px;
 }
+
+.contenedor_formulario {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;  /* Espacio entre los elementos */
+}
+
+.w-100 {
+  width: 100%;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+button {
+  width: 100%;  /* Asegura que el botón ocupe todo el ancho */
+  margin-top: 20px;  /* Espacio encima del botón */
+}

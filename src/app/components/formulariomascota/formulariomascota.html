@@ -1,22 +1,74 @@
- <div class="contenedor_formulario">
- <p>Nombre de la mascota</p>
-<mat-form-field>
-  <mat-label>Ingrese su nombre:</mat-label>
-  <input matInput>
-</mat-form-field>
- <p>Raza</p>
-<mat-form-field>
-  <mat-label>Ingrese su raza:</mat-label>
-  <input matInput>
-</mat-form-field>
- <p>Color</p>
-<mat-form-field>
-  <mat-label>Ingrese su color:</mat-label>
-  <input matInput>
-</mat-form-field>
-<p>especie</p>
-<mat-form-field>
-  <mat-label>Ingrese su especie:</mat-label>
-  <input matInput>
-</mat-form-field>
- </div>
+<form [formGroup]="mascotaForm" (ngSubmit)="onSubmit()" class="contenedor_formulario">
+  <p>Nombre de la mascota</p>
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>Ingrese el nombre</mat-label>
+    <input matInput formControlName="nombre" required>
+    <mat-error *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+      El nombre es obligatorio
+    </mat-error>
+  </mat-form-field>
+
+  <p>Raza</p>
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>Ingrese la raza</mat-label>
+    <input matInput formControlName="raza" required>
+    <mat-error *ngIf="raza.invalid && (raza.dirty || raza.touched)">
+      La raza es obligatoria
+    </mat-error>
+  </mat-form-field>
+
+  <p>Color</p>
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>Ingrese el color</mat-label>
+    <input matInput formControlName="color" required>
+    <mat-error *ngIf="color.invalid && (color.dirty || color.touched)">
+      El color es obligatorio
+    </mat-error>
+  </mat-form-field>
+
+  <p>Especie</p>
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>Ingrese la especie</mat-label>
+    <input matInput formControlName="especie" required>
+    <mat-error *ngIf="especie.invalid && (especie.dirty || especie.touched)">
+      La especie es obligatoria
+    </mat-error>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit" [disabled]="mascotaForm.invalid">
+    Guardar
+  </button>
+
+  <!-- Tabla de mascotas -->
+  <div class="table-container">
+    <table mat-table [dataSource]="mascotasDataSource">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>ID</th>
+        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef>Nombre</th>
+        <td mat-cell *matCellDef="let element">{{ element.nombre }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="raza">
+        <th mat-header-cell *matHeaderCellDef>Raza</th>
+        <td mat-cell *matCellDef="let element">{{ element.raza }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="color">
+        <th mat-header-cell *matHeaderCellDef>Color</th>
+        <td mat-cell *matCellDef="let element">{{ element.color }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="especie">
+        <th mat-header-cell *matHeaderCellDef>Especie</th>
+        <td mat-cell *matCellDef="let element">{{ element.especie }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+</form>
