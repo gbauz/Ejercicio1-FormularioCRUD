@@ -18,16 +18,24 @@ export class MascotaService {
 
   constructor(private http: HttpClient, private fb: FormBuilder) {}
 
+  // Obtener todas las mascotas
   getMascotas(): Observable<Mascota[]> {
     return this.http.get<Mascota[]>(this.apiUrl);
   }
 
+  // Crear una nueva mascota
   crearMascota(data: Mascota): Observable<Mascota> {
     return this.http.post<Mascota>(this.apiUrl, data);
   }
 
+  // Eliminar una mascota por su ID
   eliminarMascota(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  // Actualizar una mascota
+  actualizarMascota(id: number, data: Mascota): Observable<Mascota> {
+    return this.http.put<Mascota>(`${this.apiUrl}/${id}`, data);
   }
 
   // Formulario para mascota
