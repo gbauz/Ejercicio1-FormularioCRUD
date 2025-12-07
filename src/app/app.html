@@ -1,1 +1,25 @@
-<app-formulariomascota></app-formulariomascota>
+<div class="botones-container">
+
+  <button mat-raised-button color="primary"
+          (click)="toggleMascota()">
+    {{ mostrarFormularioMascota ? 'Ocultar Formulario de Mascota' : 'Mostrar Formulario de Mascota' }}
+  </button>
+
+  <button mat-raised-button color="accent"
+          (click)="togglePersona()">
+    {{ mostrarFormularioPersona ? 'Ocultar Formulario de Persona' : 'Mostrar Formulario de Persona' }}
+  </button>
+
+</div>
+
+
+<!-- FORMULARIO MASCOTA -->
+<div *ngIf="mostrarFormularioMascota">
+   <app-formulariomascota></app-formulariomascota>
+</div>
+
+<!-- FORMULARIO PERSONA -->
+<div *ngIf="mostrarFormularioPersona">
+    <app-formulariopersona></app-formulariopersona>
+
+</div>

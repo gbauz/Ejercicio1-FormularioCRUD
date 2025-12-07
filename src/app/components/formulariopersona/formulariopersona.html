@@ -1,21 +1,82 @@
- <div class="contenedor_formulario">
- <p>Nombre</p>
-<mat-form-field>
-  <mat-label>Ingrese su nombre:</mat-label>
-  <input matInput>
-</mat-form-field>
-<p>Fecha de nacimiento</p>
-<input matInput [matDatepicker]="picker">
-<mat-hint>MM/DD/YYYY</mat-hint>
-<mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-<mat-datepicker #picker></mat-datepicker>
-<p>Estatura</p>
-<mat-form-field>
-  <mat-label>Ingrese su estatura:</mat-label>
-  <input matInput>
-</mat-form-field>
- <div class="example-button-row">
-    <button matButton>Enviar</button>   
-  </div>
+<form [formGroup]="personaForm" (ngSubmit)="onSubmit()" class="contenedor_formulario">
+  <p>Nombre</p>
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>Ingrese su nombre</mat-label>
+    <input matInput formControlName="nombre" required>
+    <mat-error *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+      El nombre es obligatorio
+    </mat-error>
+  </mat-form-field>
 
- </div>
+  <p>Fecha de nacimiento</p>
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>Seleccione su fecha de nacimiento</mat-label>
+    <input matInput [matDatepicker]="picker" formControlName="fechaNacimiento" required>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+    <mat-error *ngIf="fechaNacimiento.invalid && (fechaNacimiento.dirty || fechaNacimiento.touched)">
+      La fecha de nacimiento es obligatoria
+    </mat-error>
+  </mat-form-field>
+
+  <p>Estatura</p>
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>Ingrese su estatura (en cm)</mat-label>
+    <input matInput formControlName="estatura" required type="number">
+    <mat-error *ngIf="estatura.invalid && (estatura.dirty || estatura.touched)">
+      La estatura es obligatoria
+    </mat-error>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit" [disabled]="personaForm.invalid">
+    {{ selectedPersona ? 'Editar' : 'Guardar' }}
+  </button>
+
+  <!-- Tabla de personas -->
+  <div class="table-container">
+    <table mat-table [dataSource]="personasDataSource">
+
+      <!-- Columna ID -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>ID</th>
+        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+      </ng-container>
+
+      <!-- Columna Nombre -->
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef>Nombre</th>
+        <td mat-cell *matCellDef="let element">{{ element.nombre }}</td>
+      </ng-container>
+
+      <!-- Columna Fecha de nacimiento -->
+      <ng-container matColumnDef="fechaNacimiento">
+        <th mat-header-cell *matHeaderCellDef>Fecha de nacimiento</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.fechaNacimiento | date:'dd/MM/yyyy' }}
+        </td>
+      </ng-container>
+
+      <!-- Columna Estatura -->
+      <ng-container matColumnDef="estatura">
+        <th mat-header-cell *matHeaderCellDef>Estatura (cm)</th>
+        <td mat-cell *matCellDef="let element">{{ element.estatura }}</td>
+      </ng-container>
+
+      <!-- Columna Acciones -->
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button (click)="editPersona(element)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button (click)="deletePersona(element.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+</form>
